@@ -16,10 +16,10 @@ This is not a replacement for `fetch` - there is no API match.
 const fetchS = require('fetch-streaming');
 
 // Would be executed for every new chunk of data.
-fetchS('/api/stream', body => console.log(body));
+fetchS('/api/stream', stream => console.log(stream));
 
 // Options
-fetchS('/api/stream', {method: 'POST', headers: []}, body => console.log(body));
+fetchS('/api/stream', {method: 'POST', headers: []}, stream => console.log(stream));
 
 // Promise is returned.
 const result = fetchS('/api/stream');
