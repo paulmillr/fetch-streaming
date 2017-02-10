@@ -1,6 +1,6 @@
 {
   "name": "fetch-streaming",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple XMLHTTPRequest-based `fetch` implementation for streaming content.",
   "main": "index.js",
   "scripts": {
