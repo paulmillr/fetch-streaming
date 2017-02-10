@@ -30,7 +30,7 @@ result.then(response => {console.log(response.body)}, error => {console.error(er
 
 Example of server-side `express.js` infinite endpoint.
 
-```
+```javascript
 app.get('/api/stream', (req, res) => {
   res.write(Date.now().toString());
 
