@@ -25,3 +25,7 @@ fetchS('/api/stream', {method: 'POST', headers: []}, stream => console.log(strea
 const result = fetchS('/api/stream');
 result.then(response => {console.log(response.body)}, error => {console.error(error)})
 ```
+
+## License
+
+MIT
