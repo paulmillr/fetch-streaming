@@ -21,9 +21,7 @@ var fetchStreaming = function(url, request, onStream) {
       var type = xhr.getResponseHeader('content-type') || '';
       var body = xhr.responseText;
       if (type.indexOf('application/json') !== -1) {
-        try {
-          body = JSON.parse(body);
-        } catch(e) {}
+        try { body = JSON.parse(body); } catch(e) {}
       } else if ('response' in xhr) {
         body = xhr.response;
       }
@@ -58,3 +56,10 @@ var fetchStreaming = function(url, request, onStream) {
     xhr.send(request.body);
   });
 };
+
+if (typeof module === 'object' && module.exports) {
+  module.exports = fetchStreaming
+} else {
+  window.fetchStreaming = fetchStreaming;
+}
+
