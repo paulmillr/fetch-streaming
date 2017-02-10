@@ -43,7 +43,7 @@ var fetchStreaming = function(url, request, onStream) {
       xhr.setRequestHeader(name, value)
     });
 
-    xhr.send();
+    xhr.send(request.body);
   });
 };
 
