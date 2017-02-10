@@ -26,6 +26,21 @@ const result = fetchS('/api/stream');
 result.then(response => {console.log(response.body)}, error => {console.error(error)})
 ```
 
+## Tips
+
+Example of server-side `express.js` infinite endpoint.
+
+```
+app.get('/api/stream', (req, res) => {
+  res.write(Date.now().toString());
+
+  // Send new data every second.
+  setInterval(() => {
+    res.write(Date.now().toString());
+  }, 1000);
+});
+```
+
 ## License
 
 MIT
