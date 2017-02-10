@@ -19,7 +19,8 @@ const fetchS = require('fetch-streaming');
 fetchS('/api/stream', stream => console.log(stream));
 
 // Options
-fetchS('/api/stream', {method: 'POST', headers: []}, stream => console.log(stream));
+const options = {method: 'POST', headers: {'Content-Type': 'BS'}};
+fetchS('/api/stream', options, stream => console.log(stream));
 
 // Promise is returned.
 const result = fetchS('/api/stream');

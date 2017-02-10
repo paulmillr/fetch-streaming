@@ -9,6 +9,7 @@ var fetchStreaming = function(url, request, onStream) {
   if (request == null) request = {};
   if (!url) throw new TypeError('URL is required');
   if (!request.method) request.method = 'GET';
+  var headers = request.headers || {};
   request.url = url;
 
   return new Promise(function(resolve, reject) {
@@ -17,10 +18,20 @@ var fetchStreaming = function(url, request, onStream) {
     xhr.onload = function() {
       var status = xhr.status;
       if (status < 100 || status > 599) return reject(new TypeError('Network request failed'));
+      var type = xhr.getResponseHeader('content-type') || '';
+      var body = xhr.responseText;
+      if (type.indexOf('application/json') !== -1) {
+        try {
+          body = JSON.parse(body);
+        } catch(e) {}
+      } else if ('response' in xhr) {
+        body = xhr.response;
+      }
       var options = {
         status: status,
         statusText: xhr.statusText,
-        body: 'response' in xhr ? xhr.response : xhr.responseText
+        body: body,
+        xhr: xhr
       };
       resolve(options);
     };
@@ -33,22 +44,17 @@ var fetchStreaming = function(url, request, onStream) {
       }
     };
 
-    xhr.onerror = function() {
-      reject(new TypeError('Network request failed'))
+    xhr.onerror = function(error) {
+      reject(new TypeError('Network request failed ' + error))
     };
 
     xhr.open(request.method, request.url, true);
 
-    (request.headers || []).forEach(function(value, name) {
+    Object.keys(headers).forEach(function(name) {
+      var value = headers[name];
       xhr.setRequestHeader(name, value)
     });
 
     xhr.send(request.body);
   });
 };
-
-if (typeof module === 'object' && module.exports) {
-  module.exports = fetchStreaming
-} else {
-  window.fetchStreaming = fetchStreaming;
-}
